@@ -1,0 +1,297 @@
+════════════════════════════════════════════════════════════════════════════════
+   INFORME FINAL — ANÁLISIS DE FRECUENCIAS DE CAUDALES MÁXIMOS
+   CFE Colombia v1.0.0
+════════════════════════════════════════════════════════════════════════════════
+
+Fecha del análisis: 2026-05-20
+Estación  : Río Guachicono, Cauca — Colombia
+Variable  : Caudal máximo mensual y anual (m³/s)
+Período   : 1993 - 2023 ( 31 años)
+Registros mensuales: 372
+
+Autor     : Mauricio Javier Victoria Niño
+Filiación : Investigador independiente · Cali, Colombia
+Contacto  : hidratecsa@gmail.com
+ORCID     : 0009-0003-4328-5691
+
+────────────────────────────────────────────────────────────────────────────────
+MÓDULO 1: DETECCIÓN Y CARACTERIZACIÓN DE NO ESTACIONARIEDAD
+────────────────────────────────────────────────────────────────────────────────
+
+1.1 ESTADÍSTICAS DE LA SERIE
+
+   Caudal máximo mensual (m³/s):
+   • Mínimo: 18.80 | Máximo: 732.70 | Media: 154.85 | Mediana: 114.50
+   • Desviación estándar: 121.81 | CV: 0.787 | Asimetría: 1.346
+
+   Caudal máximo anual (m³/s):
+   • Mínimo: 206.70 (1998) | Máximo: 732.70 (1994) | Media: 366.03
+   • CV: 0.364 | Asimetría: 0.885
+
+1.2 TEST PREVIO DE AUTOCORRELACIÓN
+
+   Ljung-Box (lag=6): estadístico = 12.0155, p-valor = 0.0616  ✓ Independencia no rechazada
+
+1.3 BATERÍA DE TESTS DE ESTACIONARIEDAD (α = 0.05)
+
+   Serie analizada: Caudal medio anual
+
+   ┌─ Mann-Kendall
+   │ Estadístico: τ = 0.316, Sen = 2.484 m³/s/año
+   │ p-valor: 0.0131 (evidencia SIGNIFICATIVA)
+   │ Resultado: ✓ SIGNIFICATIVO
+   │ Interpretación: Tendencia creciente
+   └─
+
+   ┌─ Mann-Whitney-Pettitt
+   │ Estadístico: Cambio en 2010 (Δ = 37.5%)
+   │ p-valor: 0.0196 (evidencia SIGNIFICATIVA)
+   │ Resultado: ✓ SIGNIFICATIVO
+   │ Interpretación: Cambio estructural abrupto en 2010
+   └─
+
+   ┌─ Mann-Kendall Sneyers
+   │ Estadístico: Cruce en 2010
+   │ Resultado: ✓ SIGNIFICATIVO
+   │ Interpretación: Cambio progresivo detectado
+   └─
+
+   ┌─ Moving-Window MK (w=10)
+   │ Estadístico: Prop. significativas = 27.3%
+   │ Resultado: ✗ NO SIGNIFICATIVO
+   │ Interpretación: Estabilidad de tendencia: Baja
+   └─
+
+   ┌─ White (heterocedasticidad)
+   │ Estadístico: BP = 3.428
+   │ p-valor: 0.1801
+   │ Resultado: ✗ NO SIGNIFICATIVO
+   │ Interpretación: Varianza constante
+   └─
+
+   ┌─ Dickey-Fuller Aumentado
+   │ Estadístico: ADF = -3.181
+   │ p-valor: 0.1179
+   │ Resultado: ✗ NO SIGNIFICATIVO
+   │ Interpretación: Posible raíz unitaria
+   └─
+
+   RESUMEN: 3 de 6 tests significativos
+   Tests formales (MK/Pettitt/White/ADF): 2 / 4 significativos
+   Criterio de routing: ≥ 2 de 4 tests formales → No estacionaria
+   (Villarini et al. 2009, Adv. Water Resour. 32:1255-1266)
+
+   CLASIFICACIÓN FINAL: TENDENCIA + CAMBIO ESTRUCTURAL
+   Nivel de confianza: ALTA
+
+   Detalle Mann-Kendall:
+   • τ de Kendall: 0.316
+   • Pendiente de Sen: 2.4843 m³/s por año
+   • Cambio total estimado: 77.01 m³/s en 31 años
+   • Dirección: incremento
+
+   Detalle Pettitt:
+   • Punto de cambio: 2010
+   • Media antes: 132.40 m³/s
+   • Media después: 182.12 m³/s
+   • Magnitud del cambio: 37.5%
+
+1.4 ANÁLISIS DE TENDENCIA POR ÉPOCA HIDROLÓGICA
+
+   Época                    |       τ |  p-valor |  Pendiente |  Cambio%
+   ----------------------------------------------------------------------
+   Dic-Feb (Seca mayor)      |    0.183 |   0.1534 |     2.4779 |   -37.0%   ✗
+   Jun-Ago (Seca menor)      |    0.183 |   0.1534 |     0.6111 |   -23.9%   ✗
+   Mar-May (Transición)     |    0.290 |   0.0228 |     3.7063 |    33.1%   ✓
+   Sep-Nov (Húmeda)         |    0.277 |   0.0296 |     2.5817 |   -56.2%   ✓
+
+1.5 FRECUENCIA DE EVENTOS EXTREMOS
+
+   Ventana móvil: 10 años
+   Umbrales globales: P90=327.7 | P95=380.4 | P99=536.6 m³/s
+
+1.6 ANÁLISIS WAVELET MULTI-ESCALA
+   Wavelet madre Morlet | n.sim = 1000 (Monte Carlo)
+   (Ver Figura 5)
+
+────────────────────────────────────────────────────────────────────────────────
+MÓDULO 2: ANÁLISIS DE FRECUENCIAS DE CAUDALES MÁXIMOS
+────────────────────────────────────────────────────────────────────────────────
+
+   Ruta de análisis: B (No Estacionario)
+
+2.1 ANÁLISIS ESTACIONARIO
+
+   Posición de trazado: Cunnane (propósito general)
+   Criterio de selección: AICc (corrección para n = 31 )
+
+   Distribución          |      AIC |     AICc |      BIC |   Fill.r | Fill.r²
+   ---------------------------------------------------------------------------
+   Gumbel (GUM)           |   387.53 |   387.96 |   390.40 |   0.9890 |   0.9780 
+   Log-Normal (LNO)       |   387.38 |   387.81 |   390.25 |   0.9892 |   0.9785 
+   Pearson III (PE3)      |   373.79 |   374.68 |   378.09 |   0.9605 |   0.9225 <- mejor
+   GEV                    |   387.84 |   388.73 |   392.14 |   0.9619 |   0.9252 
+   Normal (NOR)           |   394.25 |   394.68 |   397.12 |   0.9549 |   0.9118 
+
+   Mejor modelo (AICc): Pearson III (PE3)
+   Parámetros: α=0.564, β=282.456, ξ=206.7
+   Modelos con ΔAICc < 2.0 (competitivos): PearsonIII
+
+   Caudales estacionarios por período de retorno (m³/s):
+   IC al 90% bootstrap paramétrico GEV (B = 1000 réplicas)
+   Tr     | LP3          | GEV          | Log-Normal   | IC_inf GEV     | IC_sup GEV    
+   --------------------------------------------------------------------------------
+   2      | N/A          | 323.97       | 344.90       | 290.74         | 361.19        
+   2.33   | N/A          | 344.29       | 366.48       | 305.92         | 386.49        
+   5      | N/A          | 450.61       | 459.19       | 381.17         | 530.74        
+   10     | N/A          | 563.85       | 533.29       | 445.03         | 727.01        
+   15     | N/A          | 640.92       | 574.63       | 481.83         | 899.78        
+   20     | N/A          | 701.49       | 603.42       | 506.64         | 1046.52       
+   25     | N/A          | 752.25       | 625.54       | 526.59         | 1182.80       
+   50     | N/A          | 934.32       | 693.44       | 588.93         | 1677.78       
+   100    | N/A          | 1160.84      | 760.80       | 657.12         | 2467.50       
+   200    | N/A          | 1443.38      | 828.17       | 720.53         | 3769.85       
+   500    | N/A          | 1927.57      | 917.84       | 801.84         | 6787.10       
+
+2.2 ANÁLISIS NO ESTACIONARIO (GAMLSS)
+
+   Modelos evaluados:
+   Modelo                         |      AIC |      BIC | Advertencias
+   -----------------------------------------------------------------
+   M0_Normal_Estacionario         |   394.25 |   397.12 | OK
+   M1_Gumbel_mu_lineal            |   407.70 |   412.00 | OK
+   M2_Gumbel_mu_spline            |   379.69 |   389.15 | OK
+   M3_Gumbel_mu_sigma             |   380.46 |   391.03 | OK
+   M4_LogNormal_mu_sigma          |   360.78 |   374.83 | OK
+   M5_Gamma_mu                    |   367.74 |   376.65 | OK
+
+   Mejor modelo: M4_LogNormal_mu_sigma
+   AIC: 360.78
+
+   Validación (Residuos de Cox-Snell):
+   • Test KS: estadístico = 0.1173, p-valor = 0.7438
+   • Filliben (n puntos, Cunnane): r = 0.9763, r² = 0.9532 (Bueno)
+   • Validación global: Adecuado
+
+   Cuantiles no estacionarios (m³/s) — estimación puntual:
+   ----------------------------------------------------------------------------------------------------------------------------------
+     Año |     Tr2 |  Tr2.33 |     Tr5 |    Tr10 |    Tr15 |    Tr20 |    Tr25 |    Tr50 |   Tr100 |   Tr200 |   Tr500 |
+   ----------------------------------------------------------------------------------------------------------------------------------
+     1993 |  314.90 |  358.69 |  581.92 |  802.16 |  941.51 | 1045.64 | 1129.58 | 1409.12 | 1719.20 | 2062.43 | 2571.46 |
+     1998 |  264.75 |  272.20 |  301.77 |  323.13 |  334.35 |  341.91 |  347.58 |  364.35 |  380.13 |  395.16 |  414.18 |
+     2003 |  247.60 |  251.32 |  265.67 |  275.63 |  280.74 |  284.14 |  286.67 |  294.03 |  300.82 |  307.17 |  315.04 |
+     2008 |  300.80 |  307.93 |  335.96 |  355.95 |  366.37 |  373.35 |  378.58 |  393.96 |  408.32 |  421.92 |  439.02 |
+     2013 |  391.47 |  409.90 |  486.37 |  544.81 |  576.55 |  598.33 |  614.89 |  664.88 |  713.31 |  760.71 |  822.41 |
+     2018 |  436.38 |  454.77 |  530.14 |  586.90 |  617.47 |  638.34 |  654.15 |  701.64 |  747.29 |  791.67 |  848.99 |
+     2023 |  446.10 |  452.87 |  478.93 |  497.05 |  506.34 |  512.52 |  517.12 |  530.52 |  542.86 |  554.41 |  568.74 |
+   ----------------------------------------------------------------------------------------------------------------------------------
+
+   Intervalos de confianza 95% bootstrap residuos GAMLSS (B = 500):
+   (año más reciente de la serie)
+   Tr     | Puntual      | IC_inf 2.5%    | IC_sup 97.5%  
+   -------------------------------------------------------
+   2      | 446.10       | 346.54         | 562.22        
+   2.33   | 452.87       | 372.90         | 602.99        
+   5      | 478.93       | 415.00         | 973.10        
+   10     | 497.05       | 437.56         | 1148.66       
+   15     | 506.34       | 442.27         | 1300.09       
+   20     | 512.52       | 445.57         | 1450.20       
+   25     | 517.12       | 446.73         | 1571.71       
+   50     | 530.52       | 453.40         | 1979.26       
+   100    | 542.86       | 455.17         | 2435.24       
+   200    | 554.41       | 461.63         | 2943.38       
+   500    | 568.74       | 468.36         | 3703.91       
+
+   Comparación con GEV estacionario (año más reciente):
+   Tr     | No Estacionario | Estacionario    | Diferencia     
+   ------------------------------------------------------------
+   2      | 446.10          | 323.97          | +122.12 (+37.7%)
+   2.33   | 452.87          | 344.29          | +108.58 (+31.5%)
+   5      | 478.93          | 450.61          | +28.32 (+6.3%)
+   10     | 497.05          | 563.85          | -66.80 (-11.8%)
+   15     | 506.34          | 640.92          | -134.57 (-21.0%)
+   20     | 512.52          | 701.49          | -188.96 (-26.9%)
+   25     | 517.12          | 752.25          | -235.13 (-31.3%)
+   50     | 530.52          | 934.32          | -403.80 (-43.2%)
+   100    | 542.86          | 1160.84         | -617.98 (-53.2%)
+   200    | 554.41          | 1443.38         | -888.96 (-61.6%)
+   500    | 568.74          | 1927.57         | -1358.83 (-70.5%)
+   ------------------------------------------------------------
+
+────────────────────────────────────────────────────────────────────────────────
+NOTAS METODOLÓGICAS
+────────────────────────────────────────────────────────────────────────────────
+
+Módulo 1:
+• Test previo de autocorrelación: Ljung-Box
+• Batería de 6 tests: MK, Pettitt, Sneyers, MW-MK, White, ADF
+• α = 0.05 para todos los tests de hipótesis
+• Criterio de no estacionariedad: ≥ 2/4 tests formales significativos
+• Análisis por época hidrológica: 4 períodos intra-anuales
+• Wavelet madre Morlet | n.sim = 1000 simulaciones Monte Carlo
+
+Módulo 2:
+• Distribuciones: LP3, GEV, Gumbel, Log-Normal, Pearson III, Normal
+• Estimación por Máxima Verosimilitud (MLE)
+• Posición de trazado: Cunnane (uniforme en gráficos y Filliben)
+• Selección de modelo: AICc (Burnham & Anderson 2002)
+• IC cuantiles GEV: bootstrap paramétrico, B = 1000, IC 90%
+• GAMLSS: Modelos Aditivos Generalizados para Locación, Escala y Forma
+• IC cuantiles GAMLSS: bootstrap de residuos, B = 500, IC 95%
+• Validación no estacionaria: Cox-Snell (fitted) + Filliben + KS
+• Filliben calculado en n puntos de posición de trazado (no interpolado)
+• Períodos de retorno: 2, 2.33, 5, 10, 15, 20, 25, 50, 100, 200, 500 años
+
+Figuras:
+• DPI: 300 (JoH / HESS / WRR)
+• Figura 1: Panel exploratorio 4-en-1
+• Figura 2: Test de Mann-Kendall Sneyers (secuencial)
+• Figura 3: Tendencia por época hidrológica
+• Figura 4: Frecuencia de extremos en ventanas móviles
+• Figura 5: Análisis wavelet multi-escala
+• Figura 6: Ajuste de distribuciones estacionarias (Cunnane)
+• Figura 7: Q-Q Cox-Snell (validación no estacionaria)
+• Figura 8: Evolución temporal de cuantiles (IC 95% bootstrap)
+
+────────────────────────────────────────────────────────────────────────────────
+INFORMACIÓN DE SESIÓN R
+────────────────────────────────────────────────────────────────────────────────
+R version 4.3.1 (2023-06-16 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Spanish_Colombia.utf8  LC_CTYPE=Spanish_Colombia.utf8    LC_MONETARY=Spanish_Colombia.utf8
+[4] LC_NUMERIC=C                      LC_TIME=Spanish_Colombia.utf8    
+
+time zone: America/Bogota
+tzcode source: internal
+
+attached base packages:
+ [1] grid      parallel  splines   stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] janitor_2.2.1      lmtest_0.9-40      tseries_0.10-58    zoo_1.8-15         WaveletComp_1.2   
+ [6] evd_2.3-7.1        moments_0.14.1     Kendall_2.2.2      trend_1.1.6        scales_1.4.0      
+[11] fitdistrplus_1.2-4 survival_3.8-3     MASS_7.3-60        extRemes_2.2-1     distillery_1.2-2  
+[16] Lmoments_1.3-1     ismev_1.43         gamlss.add_5.1-14  rpart_4.1.24       nnet_7.3-20       
+[21] mgcv_1.8-42        gamlss_5.5-0       nlme_3.1-168       gamlss.dist_6.1-1  gamlss.data_6.0-7 
+[26] gridExtra_2.3      tidyr_1.3.1        ggplot2_4.0.0      lubridate_1.9.4    dplyr_1.1.4       
+[31] readxl_1.4.5      
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6        lattice_0.22-7      quadprog_1.5-8      vctrs_0.6.5         tools_4.3.1        
+ [6] generics_0.1.4      curl_7.0.0          tibble_3.2.1        xts_0.14.1          pkgconfig_2.0.3    
+[11] Matrix_1.5-4.1      RColorBrewer_1.1-3  S7_0.2.0            lifecycle_1.0.4     stringr_1.6.0      
+[16] compiler_4.3.1      farver_2.1.2        textshaping_1.0.4   snakecase_0.11.1    pillar_1.11.1      
+[21] boot_1.3-32         tidyselect_1.2.1    stringi_1.8.7       purrr_1.0.4         labeling_0.4.3     
+[26] cli_3.6.4           magrittr_2.0.3      withr_3.0.2         timechange_0.3.0    TTR_0.24.4         
+[31] extraDistr_1.10.0.4 quantmod_0.4.28     cellranger_1.1.0    ragg_1.5.0          rlang_1.1.5        
+[36] Rcpp_1.1.1-1.1      glue_1.8.0          rstudioapi_0.17.1   R6_2.6.1            systemfonts_1.3.1  
+
+════════════════════════════════════════════════════════════════════════════════
+   FIN DEL INFORME
+════════════════════════════════════════════════════════════════════════════════
